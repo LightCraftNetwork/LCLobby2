@@ -30,7 +30,7 @@ public class ConnectionListener implements Listener {
 	@EventHandler
 	public void onLeave(PlayerQuitEvent e) {
 		e.setQuitMessage(null);
-		new UtilQuery
+		RankTree.getTree().unloadRank(e.getPlayer());
 	}
 
 }
