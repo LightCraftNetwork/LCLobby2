@@ -1,0 +1,5 @@
+name: Lobby
+main: com.lightcraftmc.java.lobby.LCLobby
+version: 0.1
+commands:
+   test2:
