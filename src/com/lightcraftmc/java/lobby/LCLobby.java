@@ -9,7 +9,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.lightcraftmc.java.lobby.events.listener.chat.ChatListener;
 import com.lightcraftmc.java.lobby.events.listener.connection.ConnectionListener;
+import com.lightcraftmc.java.lobby.events.listener.gadget.GadgetListener;
 import com.lightcraftmc.java.lobby.events.listener.world.WorldEvents;
+import com.lightcraftmc.java.lobby.gadget.manager.GadgetManager;
 import com.lightcraftmc.java.lobby.item.ItemManager;
 
 public class LCLobby extends JavaPlugin {
@@ -50,6 +52,7 @@ public class LCLobby extends JavaPlugin {
 		dbManager.setAccessToken(getConfig().getString("database.accesstoken"));
 		dbManager.setHost(getConfig().getString("database.host"));
 		setupEvents();
+		GadgetManager.getInstance().init();
 	}
 
 	/**
@@ -64,6 +67,9 @@ public class LCLobby extends JavaPlugin {
 
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new ChatListener(), this);
+
+		Bukkit.getServer().getPluginManager()
+				.registerEvents(new GadgetListener(), this);
 	}
 
 	public boolean onCommand(CommandSender sender, Command command,
