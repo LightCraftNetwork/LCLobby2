@@ -5,11 +5,13 @@ import mc.lightcraft.java.remote.LCDatabase.DatabaseManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.lightcraftmc.java.lobby.events.listener.chat.ChatListener;
 import com.lightcraftmc.java.lobby.events.listener.connection.ConnectionListener;
 import com.lightcraftmc.java.lobby.events.listener.gadget.GadgetListener;
+import com.lightcraftmc.java.lobby.events.listener.gadget.GadgetMenuListener;
 import com.lightcraftmc.java.lobby.events.listener.world.WorldEvents;
 import com.lightcraftmc.java.lobby.gadget.manager.GadgetManager;
 import com.lightcraftmc.java.lobby.item.ItemManager;
@@ -70,17 +72,21 @@ public class LCLobby extends JavaPlugin {
 
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new GadgetListener(), this);
+
+		Bukkit.getServer().getPluginManager()
+				.registerEvents(new GadgetMenuListener(), this);
 	}
 
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
-		if (args.length == 1) {
-			// Bukkit.broadcastMessage(getConfig().getString(args[0]));
-			Bukkit.broadcastMessage(dbManager.query(args[0]));
-			return false;
-		}
-		getConfig().set(args[0], args[1].replace("_", " "));
-		saveConfig();
+		GadgetManager.getInstance().openInventory((Player) sender,
+				Integer.parseInt(args[0]));
+		/*
+		 * if (args.length == 1) { //
+		 * Bukkit.broadcastMessage(getConfig().getString(args[0]));
+		 * Bukkit.broadcastMessage(dbManager.query(args[0])); return false; }
+		 * getConfig().set(args[0], args[1].replace("_", " ")); saveConfig();
+		 */
 		return false;
 	}
 
